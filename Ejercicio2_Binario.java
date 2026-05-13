@@ -8,31 +8,49 @@ struct Nodo {
     Nodo(int v) : valor(v), izquierdo(nullptr), derecho(nullptr) {}
 };
 
+// Invierte el árbol binario de forma recursiva (espejo)
+
 Nodo* invertir(Nodo* raiz) {
-    // TODO: Implementa tu lógica aquí
-    return raiz;
+    if (raiz == nullptr)  // Caso base: árbol vacío, nada que invertir
+        return nullptr;
+
+    // Intercambia los hijos izquierdo y derecho del nodo actual
+    swap(raiz->izquierdo, raiz->derecho);
+
+    // Aplica la inversión recursivamente en cada subárbol
+    invertir(raiz->izquierdo);
+    invertir(raiz->derecho);
+
+    return raiz;  // Retorna la raíz con el árbol ya invertido
 }
 
 int main() {
+    
     Nodo* raiz = new Nodo(1);
     raiz->izquierdo = new Nodo(2);
     raiz->derecho = new Nodo(3);
 
     cout << "--- Prueba Ejercicio 5 ---" << endl;
     cout << "Antes de invertir:" << endl;
-    cout << "Hijo Izq: " << raiz->izquierdo->valor << " | Hijo Der: " << raiz->derecho->valor << endl;
-    
+    cout << "Hijo Izq: " << raiz->izquierdo->valor
+         << " | Hijo Der: " << raiz->derecho->valor << endl;
+
     invertir(raiz);
-    
+
     cout << "\nDespues de invertir (Esperado: Izq 3 | Der 2):" << endl;
-    
-    if(raiz->izquierdo) cout << "Hijo Izq: " << raiz->izquierdo->valor;
-    else cout << "Hijo Izq: null";
-    
+
+    if (raiz->izquierdo) cout << "Hijo Izq: " << raiz->izquierdo->valor;
+    else                 cout << "Hijo Izq: null";
+
     cout << " | ";
-    
-    if(raiz->derecho) cout << "Hijo Der: " << raiz->derecho->valor << endl;
-    else cout << "Hijo Der: null" << endl;
+
+    if (raiz->derecho) cout << "Hijo Der: " << raiz->derecho->valor << endl;
+    else               cout << "Hijo Der: null" << endl;
+
+    // Liberar memoria
+    delete raiz->izquierdo;
+    delete raiz->derecho;
+    delete raiz;
 
     return 0;
 }
